@@ -1,5 +1,5 @@
 # hapi-graphql-swagger
-Followed a tutorial to use node.js (Hapi framework), GraphQL, and Swagger docs together to build a back-end API.
+Followed a tutorial to use node.js (Hapi framework), MongoDB (mongoose), GraphQL, and Swagger docs together to build a quick back-end API.
 
 ## URLs
 
