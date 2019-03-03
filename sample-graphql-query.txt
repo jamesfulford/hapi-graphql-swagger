@@ -1,0 +1,7 @@
+{
+  painting(id: "5c7b3a420d53d137a2d3284e") {
+    name
+    url
+    technique
+  }
+}

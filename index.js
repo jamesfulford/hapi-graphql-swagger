@@ -1,11 +1,11 @@
 const hapi = require('hapi');
 const mongoose = require('mongoose');
+const { graphqlHapi, graphiqlHapi } = require('apollo-server-hapi');
 
+const schema = require('./graphql/schema');
 const Painting = require('./models/Paintings');
 
-const { mongodb } = require('./credentials');
-
-mongoose.connect(mongodb.connection, { useNewUrlParser: true });
+mongoose.connect(require('./credentials').mongodb.connection, { useNewUrlParser: true });
 
 mongoose.connection.once('open', () => {
     console.log('Connected to database.');
@@ -20,17 +20,45 @@ const baseRoute = '/api';
 const paintingUrl = `${baseRoute}/paintings`;
 
 const init = async () => {
+    await server.register({
+        name: 'GraphIQL',
+        plugin: graphiqlHapi,
+        options: {
+            path: '/graphiql',
+            graphiqlOptions: {
+                endpointURL: '/graphql',
+            },
+            route: {
+                cors: true,
+            },
+        },
+        register: () => {},
+    });
+    await server.register({
+        name: 'GraphQL',
+        plugin: graphqlHapi,
+        options: {
+            path: '/graphql',
+            graphqlOptions: {
+                schema,
+            },
+            route: {
+                cors: true,
+            },
+        },
+        register: () => { },
+    });
     server.route([
         { method: 'GET', path: paintingUrl, handler: (req, res) => Painting.find() },
         {
             method: 'POST',
             path: paintingUrl,
             handler: (req, res) => {
-                const { name, url, techniques } = req.payload;
+                const { name, url, technique } = req.payload;
                 const painting = new Painting({
                     name,
                     url,
-                    techniques,
+                    technique,
                 });
                 return painting.save();
             },
