@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "hapi": "^18.1.0",
+    "mongoose": "^5.4.16",
+    "nodemon": "^1.18.10"
+  },
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "name": "modern-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "James Fulford",
+  "license": "MIT",
+  "private": false
+}
